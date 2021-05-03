@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/form.css">
+  <link rel="stylesheet" href="./css/register.css">
+  <title>Cadastrar - Mole Game</title>
+</head>
+<body>
+  <p id="message"></p>
+
+  <main>
+    <section>
+      <div class="register-message">
+        <h2>Olá, amigo!</h2>
+
+        <p>Você já possui uma conta?</p>
+        <p>Clique no botão abaixo e <b>comece</b> a <br/><b>jogar</b> agora!</p>
+
+        <button name="page_login" id="page_login">
+          Entrar
+        </button>
+      </div>
+
+      <div class="form">
+        <h2>Mole Game</h2>
+        <form id="form_register" autocomplete="off">
+          <input type="text" name="user" id="user" placeholder="Usuário">
+          <div class="password">
+            <input type="password" name="pwd" id="pwd" placeholder="Senha">
+            <img src="img/invisible.svg" class="invisible" alt="Visualizar Senha" title="Visualizar Senha" id="view_password">
+          </div>
+          <input type="button" id="btnRegister" value="Cadastrar">
+        </form>
+
+        <div class="register-message-mobile">
+          <p>Já possui uma conta?</p>
+          <p><a href="index.html">Acesse por aqui!</a></p>
+        </div>
+
+        <p class="description">Desenvolvido por <span>Murillo Isidoro de Medeiros</span></p>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

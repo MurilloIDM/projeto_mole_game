@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #F29D03;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form {
+  color: #F29D03;
+}
+
+.form h2 {
+  color: #F29D03;
+}
+
+input[type="button"] {
+  background-color: #F29D03;
+  color: #FFF;
+}
+
+input:focus-visible {
+  outline-color: #F29D03 !important;
+}
+
+input[type="button"]:hover {
+  border: 1px solid #F29D03;
+  color: #F29D03;
+  background-color: #FFF;
+}
+
+.password {
+  position: relative;
+}
+
+.password input[type="password"] {
+  padding-right: 32px;
+}
+
+.password img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10.5px;
+  right: 12px;
+}
+
+.description {
+  position: fixed;
+  right: 0;
+  bottom: 24px;
+  color: #F29D03;
+  background-color: #FFF;
+}
+
+.description span {
+  color: #FFF;
+  padding-right: 30px;
+  background-color: #F29D03;
+}
+
+.register-message {
+  color: #FFF;
+  background-color: #25253D;
+}
+
+.register-message button {
+  color: #25253D;
+  background-color: #FFF;
+}
+
+.register-message button:hover {
+  color: #FFF;
+  border: 1px solid #FFF;
+  background-color: #25253D;
+}
+
+.register-message-mobile p {
+  font-weight: 600;
+}
+
+.register-message-mobile a:link, .register-message-mobile a:visited {
+  color: #25253D;
+}
+
+@media screen and (min-width: 64rem) {
+  .form {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+
+  .register-message {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+
+  .description {
+    position: absolute;
+  }
+
+  .register-message-mobile {
+    display: none;
+  }
+}

@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #25253D;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form {
+  color: #1e333b;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.form h2 {
+  color: #25253D;
+}
+
+input[type="button"] {
+  background-color: #25253D;
+  color: #FFF;
+}
+
+input:focus-visible {
+  outline-color: #25253D !important;
+}
+
+input[type="button"]:hover {
+  border: 1px solid #25253D;
+  color: #25253D;
+  background-color: #FFF;
+}
+
+.password {
+  position: relative;
+}
+
+.password input[type="password"] {
+  padding-right: 32px;
+}
+
+.password img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10.5px;
+  right: 12px;
+}
+
+.description {
+  position: fixed;
+  left: 0;
+  bottom: 24px;
+  color: #FFF;
+  padding-left: 30px;
+  background-color: #25253D;
+}
+
+.description span {
+  color: #25253D;
+  background-color: #FFF;
+}
+
+.register-message {
+  color: #FFF;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background-color: #F29D03;
+}
+
+.register-message button {
+  color: #F29D03;
+  background-color: #FFF;
+}
+
+.register-message button:hover {
+  color: #FFF;
+  border: 1px solid #FFF;
+  background-color: #F29D03;
+}
+
+.register-message-mobile p {
+  font-weight: 600;
+}
+
+.register-message-mobile a:link, .register-message-mobile a:visited {
+  color: #F29D03;
+}
+
+@media screen and (min-width: 64em) {
+  .register-message-mobile {
+    display: none;
+  }
+
+  .description {
+    position: absolute;
+  }
+}

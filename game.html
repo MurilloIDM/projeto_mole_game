@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="css/jAlertWifi.css">
+  <title>Jogo das Toupeiras</title>
+</head>
+<body>
+  <header>
+    <p>Tempo: 00:<span id="chrono">00</span></p>
+    <p>Pontuação: <span id="score">0</span></p>
+  </header>
+
+  <main>
+    <section>
+      <div id="board"></div>
+    </section>
+  </main>
+
+  <footer>
+    <label for="level">Nível</label>
+    <select name="" id="level" onchange="fillBoard()">
+      <option value="easy">Fácil</option>
+      <option value="medium">Médio</option>
+      <option value="hard">Difícil</option>
+    </select>
+
+    <button id="btnPlay">
+      Play
+    </button>
+
+    <button id="btnPause" disabled>
+      Pause
+    </button>
+
+    <button id="btnStop" disabled>
+      Stop
+    </button>
+
+    <button id="btnExit">
+      Exit
+    </button>
+    
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/jAlertWifi.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>
