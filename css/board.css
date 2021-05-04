@@ -19,25 +19,19 @@ body {
     justify-content: flex-start;
     align-items: stretch;
     align-content: stretch;
+    background-color: #25253D;
     font-family: 'Montserrat', sans-serif;
 }
 
 main {
-    background-color: #25253D;
-}
-
-main, section {
-    flex: 1;
-    align-items: center;
-    justify-content: center;
     display: flex;
-}
-
-main {
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: calc(100% - 190px);
+    background-color: #25253D;
 }
 
 #board {
@@ -48,8 +42,13 @@ main {
     float: left;
 }
 
+#board img {
+    width: 80px;
+    height: 60px;
+}
+
 header {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -84,7 +83,7 @@ header .score {
 }
 
 footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
@@ -92,7 +91,7 @@ footer {
     flex-flow: row wrap;
     height: 110px;
     justify-content: center;
-    border: 1px solid #fff;
+    background-color: #25253D;
 }
 
 footer button {
@@ -157,33 +156,44 @@ footer .buttons_game {
     position: absolute;
     left: 12px;
     bottom: 12px;
+    z-index: 9999;
 }
 
-button.levels {
+.levels {
+    position: absolute;
+    bottom: 12px;
+    left: 20px;
+    display: none;
+    grid-template-columns: auto auto auto;
+    background-color: #F29D03;
+    padding: 2.5px 16px 2.5px 36px;
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 32px;
+    border-top-left-radius: 32px;
+}
+
+.levels button {
     width: 35px;
     height: 35px;
     font-size: 12px;
-    display: none;
-}
-
-#levelOne {
-    position: absolute;
-    top: 10px;
-    left: 32px;
+    display: block;
+    color: #F29D03;
+    background-color: #25253D;
+    border: 2px solid #F29D03;
 }
 
 #levelTwo {
-    position: absolute;
-    top: 18px;
-    left: 73px;
-}
-
-#levelThree {
-    position: absolute;
-    bottom: 14.5px;
-    left: 64px;
+    margin: 0 12px;
 }
 
 footer .select_level {
     width: 100%;
+}
+
+@media screen and (max-width: 592px) {
+    #board img {
+        width: 50px;
+        height: 40px;
+    }    
 }

@@ -11,10 +11,12 @@ const $imagesGame = {
   "default": "buraco.gif"
 };
 
-const $imageWidth = 100; // Largura da toupeira
-const $imageHeight = 80; // Altura da toupeira
+let $imageWidth = 80; // Largura da toupeira
+let $imageHeight = 60; // Altura da toupeira
 
 const $initialTime = 30;
+
+let $selectLevel = "easy";
 
 let $idChronoGame;
 let $idStartGame;
@@ -22,9 +24,32 @@ let $value = 0;
 let $timeGame = $initialTime;
 
 $(document).ready(function() {
-  fillBoard();
+
+	$(window).resize(function() {
+		let $width = $(window).width();
+
+		$imageWidth = 80;
+		$imageHeight = 60;
+
+		if ($width <= 592) {
+			$imageWidth = 50;
+			$imageHeight = 40;
+		}
+
+		fillBoard();
+		return;
+ 	});
+
+	 fillBoard();
 
   $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
+
+  $(".btn_levels").click(function() {
+    $selectLevel = $(this).val();
+
+    $(".levels").fadeOut(600);
+    fillBoard();
+  });
 
   $("#btnPlay").click(function() {
     btnCtrl();
@@ -33,8 +58,7 @@ $(document).ready(function() {
   });
 
   $("#btnLevel").click(function() {
-    console.log('aqui');
-    $(".levels").fadeToggle(600);
+    $(".levels").fadeToggle(600).css("display", "grid");
   });
 
   $("#btnPause").click(function() {
@@ -51,6 +75,8 @@ $(document).ready(function() {
 
 function fillBoard() {
   const $level = getLevel();
+
+  console.log($level);
 
   const $boardWith = $imageWidth * $level;
   const $boardHeight = $imageHeight * $level;
@@ -91,7 +117,7 @@ function getRandNumber(min, max) {
 }
 
 function getLevel() {
-  return $levels[$("#level").val()];
+  return $levels[$selectLevel];
 }
 
 function updateScore($image) {
