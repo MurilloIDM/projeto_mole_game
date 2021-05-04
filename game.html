@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/board.css">
   <link rel="stylesheet" href="css/jAlertWifi.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>Jogo das Toupeiras</title>
 </head>
 <body>
   <header>
-    <p>Tempo: 00:<span id="chrono">00</span></p>
-    <p>Pontuação: <span id="score">0</span></p>
+    <p class="time">00:<span id="chrono">00</span></p>
+    <p class="score"><span id="score">0</span></p>
   </header>
 
   <main>
@@ -21,27 +22,47 @@
   </main>
 
   <footer>
-    <label for="level">Nível</label>
-    <select name="" id="level" onchange="fillBoard()">
-      <option value="easy">Fácil</option>
-      <option value="medium">Médio</option>
-      <option value="hard">Difícil</option>
-    </select>
+    <div class="buttons_game">
+      <button id="btnPause" disabled>
+        Pause
+      </button>
+    
+      <button id="btnPlay">
+        Play
+      </button>
+    
+      <button id="btnStop" disabled>
+        Stop
+      </button>
+    </div>
+      
 
-    <button id="btnPlay">
-      Play
+    <!-- <div class="select_level">
+      <select name="" id="level" onchange="fillBoard()">
+        <option value="easy">Fácil</option>
+        <option value="medium">Médio</option>
+        <option value="hard">Difícil</option>
+      </select>
+    </div> -->
+
+    <button id="btnLevel">
+      level
     </button>
 
-    <button id="btnPause" disabled>
-      Pause
+    <button class="levels" id="levelOne" title="Easy Game">
+      E
     </button>
 
-    <button id="btnStop" disabled>
-      Stop
+    <button class="levels" id="levelTwo" title="Medium Game">
+      M
+    </button>
+
+    <button class="levels" id="levelThree" title="Hard Game">
+      H
     </button>
 
     <button id="btnExit">
-      Exit
+      <i class="material-icons">exit_to_app</i>
     </button>
     
   </footer>

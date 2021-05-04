@@ -32,6 +32,11 @@ $(document).ready(function() {
     $idChronoGame = setInterval(startChronoGame, 1000);
   });
 
+  $("#btnLevel").click(function() {
+    console.log('aqui');
+    $(".levels").fadeToggle(600);
+  });
+
   $("#btnPause").click(function() {
   });
 
@@ -40,7 +45,7 @@ $(document).ready(function() {
   });
 
   $("#btnExit").click(function() {
-    
+    alertWifi("Você já está indo embora?", false, 0, false, 24, false);
   });
 });
 
@@ -111,7 +116,7 @@ function startChronoGame() {
 function endGame() {
   clearInterval($idChronoGame);
   clearInterval($idStartGame);
-  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$value}`, false, 0, `img/${$imagesGame.dead}`, 24);
+  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$value}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
   fillBoard();
 
   $("#score").text("0");

@@ -20,7 +20,7 @@
 //  showPanelInfo("",true,3,"","100"): exibe o painel de informacoes com o texto inicialmente em 3 até chegar 0 e depois o painel desaparece
 //  showPanelInfo("Fim de jogo",false,0,"img/imagem.gif","200"): exibe o painel com a msg "Fim de jogo" com um btn para fechar a janela
 
-function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize) {
+function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $typeButton) {
     let $panelInfo = $(`<div></div>`).addClass("panelInfo");
     let $contentPanel = $(`<div></div>`).addClass("contentPanel");
     $($panelInfo).append($contentPanel);
@@ -36,10 +36,20 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize) {
     $($contentPanel).append($txtPanelInfo);
     
     // Se não houver timer exibe um texto fixo ao inves de um cronometro regressivo
-    if (!$hasTimer) {
+    if (!$hasTimer && $typeButton) {
         $btnPanelInfo = $("<button></button>").text("Fechar").addClass("button");
         $($contentPanel).append($btnPanelInfo);
         $($btnPanelInfo).click(function(){closeAlertWifi($panelInfo)});
+    }
+
+    if (!$hasTimer && !$typeButton) {
+        $btnPanelTrue = $("<button></button>").text("Sim").addClass("button");
+        $($contentPanel).append($btnPanelTrue);
+        $btnPanelFalse = $("<button></button>").text("Não").addClass("button");
+        $($contentPanel).append($btnPanelFalse);
+
+        $($btnPanelTrue).click(() => open("index.html", "_self"));
+        $($btnPanelFalse).click(() =>  closeAlertWifi($panelInfo));
     }
 
     // Adiciona o painel de informações ao body
