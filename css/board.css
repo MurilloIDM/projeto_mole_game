@@ -42,11 +42,6 @@ main {
     float: left;
 }
 
-#board img {
-    width: 80px;
-    height: 60px;
-}
-
 header {
     position: relative;
     top: 0;
@@ -110,6 +105,11 @@ footer button:hover {
     cursor: pointer;
 }
 
+footer button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 footer .buttons_game {
     width: 100%;
     display: flex;
@@ -160,40 +160,97 @@ footer .buttons_game {
 }
 
 .levels {
-    position: absolute;
-    bottom: 12px;
-    left: 20px;
-    display: none;
-    grid-template-columns: auto auto auto;
-    background-color: #F29D03;
-    padding: 2.5px 16px 2.5px 36px;
-    border-bottom-right-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-left-radius: 32px;
-    border-top-left-radius: 32px;
+    background-color: #25253D;
 }
 
-.levels button {
-    width: 35px;
-    height: 35px;
-    font-size: 12px;
-    display: block;
+.levels p {
+    font-size: 18px;
+    font-weight: 700;
+    color: #F29D03;
+    margin-bottom: 12px;
+}
+
+.levels #btnCloseModal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 0;
+    width: 30px;
+    height: 25px;
     color: #F29D03;
     background-color: #25253D;
-    border: 2px solid #F29D03;
-}
-
-#levelTwo {
-    margin: 0 12px;
 }
 
 footer .select_level {
     width: 100%;
 }
 
-@media screen and (max-width: 592px) {
+@media screen and (max-width: 767px) {
     #board img {
         width: 50px;
         height: 40px;
     }    
+
+    .levels {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 9999;
+        display: none;
+        flex-flow: column nowrap;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .levels .btn_levels {
+        border-radius: 12px;
+    }
+
+    .levels .btn_levels {
+        width: 60px;
+        height: 40px;
+        font-size: 12px;
+        display: block;
+        color: #25253D;
+        margin: 12px 0;
+        background-color: #F29D03;
+    }
+    
+}
+
+@media screen and (min-width: 768px) {
+    #board img {
+        width: 80px;
+        height: 60px;
+    }
+
+    .levels {
+        position: absolute;
+        bottom: 12px;
+        left: 20px;
+        display: none;
+        background-color: #F29D03;
+        padding: 2.5px 16px 2.5px 36px;
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom-left-radius: 32px;
+        border-top-left-radius: 32px;
+    }
+
+    .levels p, .levels #btnCloseModal {
+        display: none;
+    }
+    
+    .levels .btn_levels {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+        display: block;
+        color: #F29D03;
+        margin: 0 4px;
+        background-color: #25253D;
+        border: 2px solid #F29D03;
+    }
 }

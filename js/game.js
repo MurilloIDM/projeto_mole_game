@@ -31,7 +31,7 @@ $(document).ready(function() {
 		$imageWidth = 80;
 		$imageHeight = 60;
 
-		if ($width <= 592) {
+		if ($width <= 767) {
 			$imageWidth = 50;
 			$imageHeight = 40;
 		}
@@ -52,20 +52,29 @@ $(document).ready(function() {
   });
 
   $("#btnPlay").click(function() {
-    btnCtrl();
-    $idStartGame = setInterval(startGame, 1180);
+    buttonControl(1);
+    $idStartGame = setInterval(startGame, 1180); //1180
     $idChronoGame = setInterval(startChronoGame, 1000);
   });
 
   $("#btnLevel").click(function() {
-    $(".levels").fadeToggle(600).css("display", "grid");
+    $(".levels").fadeToggle(600).css("display", "flex");
+  });
+
+  $("#btnCloseModal").click(function() {
+    $(".levels").fadeToggle(600).css("display", "flex");
   });
 
   $("#btnPause").click(function() {
+    buttonControl(2);
+    resetGame("intervals");
+    resetMoleMarked();
   });
 
   $("#btnStop").click(function() {
-    
+    buttonControl(3);
+    resetGame("all");
+    resetMoleMarked();
   });
 
   $("#btnExit").click(function() {
@@ -75,8 +84,6 @@ $(document).ready(function() {
 
 function fillBoard() {
   const $level = getLevel();
-
-  console.log($level);
 
   const $boardWith = $imageWidth * $level;
   const $boardHeight = $imageHeight * $level;
@@ -104,12 +111,15 @@ function placeHolesBoard($level) {
 }
 
 function startGame() {
-  fillBoard();
+  resetMoleMarked();
 
   const $level = getLevel();
   const $randNumber = getRandNumber(1, Math.pow($level, 2));
 
-  $(`#mole_${$randNumber}`).attr("src", `img/${$imagesGame.active}`);
+  const $id = `#mole_${$randNumber}`;
+
+  $($id).attr("src", `img/${$imagesGame.active}`);
+  $($id).addClass("marked");
 }
 
 function getRandNumber(min, max) {
@@ -127,10 +137,32 @@ function updateScore($image) {
   }
 }
 
-function btnCtrl() {
-  $("#btnPause").prop("disabled", false);
-  $("#btnStop").prop("disabled", false);
-  $("#btnPlay").prop("disabled", true);
+function buttonControl(button) {
+  switch(button) {
+    case 1:
+      $("#btnPlay").prop("disabled", true);
+      $("#btnStop").prop("disabled", false);
+      $("#btnExit").prop("disabled", true);
+      $("#btnLevel").prop("disabled", true);
+      $("#btnPause").prop("disabled", false);
+      break;
+    case 2:
+      $("#btnPlay").prop("disabled", false);
+      $("#btnStop").prop("disabled", false);
+      $("#btnExit").prop("disabled", false);
+      $("#btnLevel").prop("disabled", true);
+      $("#btnPause").prop("disabled", true);
+      break;
+    case 3:
+      $("#btnPlay").prop("disabled", false);
+      $("#btnStop").prop("disabled", true);
+      $("#btnExit").prop("disabled", false);
+      $("#btnLevel").prop("disabled", false);
+      $("#btnPause").prop("disabled", true);
+      break;
+    default:
+      break;
+  }
 }
 
 function startChronoGame() {
@@ -139,12 +171,32 @@ function startChronoGame() {
     : endGame();
 }
 
-function endGame() {
+function resetMoleMarked() {
+  const $id = `#${$(".marked").attr("id")}`;
+
+  if ($id) {
+    $($id)
+      .removeClass("marked")
+      .attr("src", `img/${$imagesGame.default}`);
+  }
+}
+
+function resetGame(option) {
+  if (option === "all") {
+    $value = 0;
+    $timeGame = $initialTime;
+
+    $("#score").text($value);
+    $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
+  }
+  
   clearInterval($idChronoGame);
   clearInterval($idStartGame);
-  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$value}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
-  fillBoard();
+}
 
-  $("#score").text("0");
-  $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
+function endGame() {
+  resetGame("all");
+
+  fillBoard();
+  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$value}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
 }
