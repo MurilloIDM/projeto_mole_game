@@ -53,9 +53,7 @@ input[type="button"]:hover {
 }
 
 .description {
-  position: fixed;
-  left: 0;
-  bottom: 24px;
+  display: none;
   color: #FFF;
   padding-left: 30px;
   background-color: #25253D;
@@ -98,6 +96,9 @@ input[type="button"]:hover {
   }
 
   .description {
+    display: block;
     position: absolute;
+    left: 0;
+    bottom: 24px;
   }
 }

@@ -51,9 +51,7 @@ input[type="button"]:hover {
 }
 
 .description {
-  position: fixed;
-  right: 0;
-  bottom: 24px;
+  display: none;
   color: #F29D03;
   background-color: #FFF;
 }
@@ -100,7 +98,10 @@ input[type="button"]:hover {
   }
 
   .description {
+    display: block;
     position: absolute;
+    right: 0;
+    bottom: 24px;
   }
 
   .register-message-mobile {

@@ -25,22 +25,11 @@ let $timeGame = $initialTime;
 
 $(document).ready(function() {
 
-	$(window).resize(function() {
-		let $width = $(window).width();
+  sizeScreenAction();
 
-		$imageWidth = 80;
-		$imageHeight = 60;
-
-		if ($width <= 767) {
-			$imageWidth = 50;
-			$imageHeight = 40;
-		}
-
-		fillBoard();
-		return;
+  $(window).resize(function() {
+    sizeScreenAction();
  	});
-
-	 fillBoard();
 
   $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
 
@@ -195,8 +184,25 @@ function resetGame(option) {
 }
 
 function endGame() {
+  const $finishValue = $value;
+
   resetGame("all");
+  buttonControl(3);
 
   fillBoard();
-  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$value}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
+  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$finishValue}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
+}
+
+function sizeScreenAction() {
+  let $width = $(window).width();
+
+  $imageWidth = 80;
+  $imageHeight = 60;
+
+  if ($width <= 767) {
+    $imageWidth = 50;
+    $imageHeight = 40;
+  }
+
+  fillBoard();
 }
