@@ -1,44 +1,25 @@
-const $URL = "http://192.168.100.55:8080";
-
-const $levels = {
-  "easy": 3,
-  "medium": 5,
-  "hard": 7
-};
-
-const $levelsView = {
-  3: "easy",
-  5: "medium",
-  7: "hard"
-};
-
-const $imagesGame = {
-  "active": "toupeira.gif",
-  "dead": "morreu.gif",
-  "default": "buraco.gif"
-};
-
-let $imageWidth = 80; // Largura da toupeira
-let $imageHeight = 60; // Altura da toupeira
-
 const $initialTime = 30;
 
-let $selectLevel = "easy";
+let $imageWidth = 80;
+let $imageHeight = 60;
 
-let $idChronoGame;
-let $idStartGame;
 let $value = 0;
+let $selectLevel = "easy";
 let $timeGame = $initialTime;
 
-$(document).ready(function() {
+let $idTimeGame;
+let $idStartGame;
 
+$(document).ready(function() {
   sizeScreenAction();
 
   $(window).resize(function() {
     sizeScreenAction();
  	});
 
-  $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
+  $("#time").text(
+    $initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2})
+  );
 
   $(".btn_levels").click(function() {
     $selectLevel = $(this).val();
@@ -47,10 +28,11 @@ $(document).ready(function() {
     fillBoard();
   });
 
+  // Definição das ações dos botões
   $("#btnPlay").click(function() {
     buttonControl(1);
-    $idStartGame = setInterval(startGame, 1180); //1180
-    $idChronoGame = setInterval(startChronoGame, 1000);
+    $idStartGame = setInterval(startGame, 1180);
+    $idTimeGame = setInterval(startTimeGame, 1000);
   });
 
   $("#btnLevel").click(function() {
@@ -78,6 +60,8 @@ $(document).ready(function() {
   });
 });
 
+// Funções do Motor do Jogo
+
 function fillBoard() {
   const $level = getLevel();
 
@@ -90,12 +74,11 @@ function fillBoard() {
 }
 
 function placeHolesBoard($level) {
-
   $("#board").empty();
 
   for ($x = 0; $x < Math.pow($level, 2); $x++) {
     const $div = $("<div></div>");
-    const $img = $("<img>").attr({ src: `img/${$imagesGame.default}`, id: `mole_${$x + 1}` });
+    const $img = $("<img>").attr({ src: `img/${$IMAGES_GAME.default}`, id: `mole_${$x + 1}` });
 
     $($img).click(function() {
       updateScore(this);
@@ -114,23 +97,87 @@ function startGame() {
 
   const $id = `#mole_${$randNumber}`;
 
-  $($id).attr("src", `img/${$imagesGame.active}`);
+  $($id).attr("src", `img/${$IMAGES_GAME.active}`);
   $($id).addClass("marked");
 }
+
+function updateScore($image) {
+  if ($($image).attr("src").includes($IMAGES_GAME.active)) {
+    $("#score").text($value += 1);
+    $($image).attr("src", `img/${$IMAGES_GAME.dead}`);
+  }
+}
+
+function endGame() {
+  const $finishValue = $value;
+
+  resetGame("all");
+  buttonControl(3);
+  fillBoard();
+
+  if (typeof Storage !== "undefined") {
+    const $user = JSON.parse(localStorage.getItem("user"));
+
+    if ($user) {
+      const $level = $LEVELS_NUMBER[getLevel()];
+
+      const $payloadRank = {
+        level: $level,
+        idUser: $user.id,
+        score: $finishValue,
+      };
+
+      $.ajax({
+        type: "POST",
+        async: true,
+        dataType: "json",
+        url: `${$URL}/rank`,
+        contentType: "application/json",
+        data: JSON.stringify($payloadRank),
+        success: function() {
+          getRanks($finishValue);
+        },
+        error: function(data) {
+          const { responseText } = data;
+          const $errorText = responseText;
+
+          getRanks($finishValue, $errorText);
+        }
+      });
+
+    }
+
+  } else {
+    createMessage('Erro na validação, tente novamente!', "error", "error.png");
+    return;
+  }
+}
+
+function getRanks($score, $errorText) {
+  const $level = $LEVELS_NUMBER[getLevel()];
+
+  const $message = $errorText ? $errorText : `Você superou seu record anterior! Chegou em ${$score} pontos!`;
+
+  $.ajax({
+    type: "GET",
+    async: true,
+    url: `${$URL}/rank?level=${$level}`,
+    dataType: "json",
+    success: function(data) {
+      const $table = createTable(data);
+      alertWifi($message, false, 0, `img/${$IMAGES_GAME.dead}`, 18, true, true, $table);
+    },
+  });
+}
+
+// Funções de Configuração
 
 function getRandNumber(min, max) {
   return Math.round((Math.random() * Math.abs(max - min)) + min);
 }
 
 function getLevel() {
-  return $levels[$selectLevel];
-}
-
-function updateScore($image) {
-  if ($($image).attr("src").includes($imagesGame.active)) {
-    $("#score").text($value += 1);
-    $($image).attr("src", `img/${$imagesGame.dead}`);
-  }
+  return $LEVELS_STRING[$selectLevel];
 }
 
 function buttonControl(button) {
@@ -161,9 +208,9 @@ function buttonControl(button) {
   }
 }
 
-function startChronoGame() {
+function startTimeGame() {
   ($timeGame > 0)
-    ? $("#chrono").text((--$timeGame).toLocaleString("pt-br", {minimumIntegerDigits: 2}))
+    ? $("#time").text((--$timeGame).toLocaleString("pt-br", {minimumIntegerDigits: 2}))
     : endGame();
 }
 
@@ -173,7 +220,7 @@ function resetMoleMarked() {
   if ($id) {
     $($id)
       .removeClass("marked")
-      .attr("src", `img/${$imagesGame.default}`);
+      .attr("src", `img/${$IMAGES_GAME.default}`);
   }
 }
 
@@ -197,76 +244,11 @@ function resetGame(option) {
     $timeGame = $initialTime;
 
     $("#score").text($value);
-    $("#chrono").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
+    $("#time").text($initialTime.toLocaleString("pt-br", {minimumIntegerDigits: 2}));
   }
   
-  clearInterval($idChronoGame);
+  clearInterval($idTimeGame);
   clearInterval($idStartGame);
-}
-
-function endGame() {
-  const $finishValue = $value;
-
-  resetGame("all");
-  buttonControl(3);
-  fillBoard();
-
-  if (typeof Storage !== "undefined") {
-    const $user = JSON.parse(localStorage.getItem("user"));
-
-    if ($user) {
-      const $level = $levelsView[getLevel()];
-
-      const $payloadRank = {
-        level: $level,
-        idUser: $user.id,
-        score: $finishValue,
-      };
-
-      console.log("payload -> ", $payloadRank);
-
-      $.ajax({
-        type: "POST",
-        async: true,
-        dataType: "json",
-        url: `${$URL}/rank`,
-        contentType: "application/json",
-        data: JSON.stringify($payloadRank),
-        success: function() {
-          getRanks($finishValue);
-        },
-        error: function(data) {
-          const { responseText } = data;
-          const $errorText = responseText;
-
-          getRanks($finishValue, $errorText);
-        }
-      });
-
-    }
-
-  } else {
-    createMessage('Erro na validação, tente novamente!', "error", "error.png");
-    return;
-  }
-}
-
-function getRanks($score, $errorText) {
-  const $level = $levelsView[getLevel()];
-
-  const $message = $errorText ? $errorText : `Você ultrapassou sua record. Sua pontuação foi de ${$score}`;
-
-  $.ajax({
-    type: "GET",
-    async: true,
-    url: `${$URL}/rank?level=${$level}`,
-    dataType: "json",
-    success: function(data) {
-      console.log("data ranks -> ", data);
-      const $table = createTable(data);
-      alertWifi($message, false, 0, `img/${$imagesGame.dead}`, 18, true, true, $table);
-    },
-  });
 }
 
 function createTable(ranks) {
