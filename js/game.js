@@ -6,9 +6,12 @@ let $imageHeight = 60;
 let $value = 0;
 let $selectLevel = "easy";
 let $timeGame = $initialTime;
+let bleep = new Audio();
+bleep.src = "/sound/click_sound.mp3";
 
 let $idTimeGame;
 let $idStartGame;
+let $idUserGame;
 
 $(document).ready(function() {
   sizeScreenAction();
@@ -103,6 +106,7 @@ function startGame() {
 
 function updateScore($image) {
   if ($($image).attr("src").includes($IMAGES_GAME.active)) {
+    bleep.play();
     $("#score").text($value += 1);
     $($image).attr("src", `img/${$IMAGES_GAME.dead}`);
   }
@@ -117,6 +121,7 @@ function endGame() {
 
   if (typeof Storage !== "undefined") {
     const $user = JSON.parse(localStorage.getItem("user"));
+    $idUserGame = $user.id;
 
     if ($user) {
       const $level = $LEVELS_NUMBER[getLevel()];
@@ -153,6 +158,21 @@ function endGame() {
   }
 }
 
+function limitFive($data) {
+  const $array = [];
+  const $length = $data.length;
+
+  if ($length > 5) {
+    for (let x = 0; x < 5; x++) {
+      $array.push($data[x]);
+    }
+
+    return $array;
+  }
+
+  return $data;
+}
+
 function getRanks($score, $errorText) {
   const $level = $LEVELS_NUMBER[getLevel()];
 
@@ -164,7 +184,9 @@ function getRanks($score, $errorText) {
     url: `${$URL}/rank?level=${$level}`,
     dataType: "json",
     success: function(data) {
-      const $table = createTable(data);
+      const $ranks = limitFive(data);
+      const $table = createTable($ranks);
+
       alertWifi($message, false, 0, `img/${$IMAGES_GAME.dead}`, 18, true, true, $table);
     },
   });
@@ -258,11 +280,17 @@ function createTable(ranks) {
   $($table).append($header);
 
   ranks.forEach((rank, index) => {
+    const $id = rank && rank.user.id;
     const $user = rank && rank.user.name;
     const $score = rank && rank.score;
     const $level = rank && rank.level;
 
     const $line = $("<tr></tr>");
+
+    if ($id === $idUserGame) {
+      $($line).addClass("user_game");
+    }
+
     const $columnIndex = $("<td></td>").text(index + 1);
     const $columnUser = $("<td></td>").text($user);
     const $columnScore = $("<td></td>").text($score);

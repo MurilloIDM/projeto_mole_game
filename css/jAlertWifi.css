@@ -63,6 +63,8 @@
 .contentPanel table {
     padding: 12px 24px;
     border-radius: 24px;
+    margin: 0 auto;
+    border-spacing: 0;
     background-color: #fff;
 }
 
@@ -76,18 +78,15 @@
     font-weight: 900;
 }
 
+.contentPanel table .user_game {
+    background-color: #25253D;
+}
+
+.contentPanel table .user_game td {
+    color: #F29D03;
+}
+
 .panelInfo .button:hover {
     background-color: #25253D;
     color:#F29D03;
 }
-
-/* @media screen and (min-width: 767px) {
-    .contentPanel table {
-        overflow: auto;
-        margin: 0 auto;
-        min-width: 140px;
-        padding: 12px 24px;
-        border-radius: 24px;
-        background-color: #fff;
-    }
-} */
