@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    overflow-y: auto;
 }
 .panelInfo .contentPanel {
     width:100%;
@@ -44,7 +45,49 @@
     border: none;
     outline: none;
 }
+
+.contentPanel h2 {
+    font-size: 32px;
+    font-weight: 900;
+    color: #F29D03;
+    margin-bottom: 24px;
+}
+
+.contentPanel .table_container {
+    width: 100%;
+    min-width: 146px;
+    overflow: auto;
+    padding-bottom: 12px;
+}
+
+.contentPanel table {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: #fff;
+}
+
+.contentPanel table td {
+    padding: 8px 16px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.contentPanel table th {
+    font-weight: 900;
+}
+
 .panelInfo .button:hover {
     background-color: #25253D;
     color:#F29D03;
 }
+
+/* @media screen and (min-width: 767px) {
+    .contentPanel table {
+        overflow: auto;
+        margin: 0 auto;
+        min-width: 140px;
+        padding: 12px 24px;
+        border-radius: 24px;
+        background-color: #fff;
+    }
+} */

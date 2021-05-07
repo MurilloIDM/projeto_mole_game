@@ -1,4 +1,4 @@
-const $URL = "http://localhost:8080";
+const $URL = "http://192.168.100.55:8080";
 
 $(document).ready(function() {
   $("#btnLogin").click(function() {
@@ -52,6 +52,19 @@ function success(users) {
   });
 
   if ($usersExists) {
+    if (typeof (Storage) !== "undefined") {
+      const user = {
+        id: $usersExists.id,
+        name: $usersExists.name,
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+    } else {
+      createMessage('Erro na validação, tente novamente!', "error", "error.png");
+      return;
+    }
+
     createMessage(`Boa sorte, ${$name}. Aproveite o jogo!`, "success", "success.png");
 
     setTimeout(open, 1900, "game.html", "_self");

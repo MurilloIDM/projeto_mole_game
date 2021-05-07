@@ -20,7 +20,7 @@
 //  showPanelInfo("",true,3,"","100"): exibe o painel de informacoes com o texto inicialmente em 3 até chegar 0 e depois o painel desaparece
 //  showPanelInfo("Fim de jogo",false,0,"img/imagem.gif","200"): exibe o painel com a msg "Fim de jogo" com um btn para fechar a janela
 
-function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $typeButton) {
+function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $typeButton, $isTable, $tableElement) {
     let $panelInfo = $(`<div></div>`).addClass("panelInfo");
     let $contentPanel = $(`<div></div>`).addClass("contentPanel");
     $($panelInfo).append($contentPanel);
@@ -30,10 +30,23 @@ function alertWifi($txt, $hasTimer, $countTimer, $srcImg, $fontSize, $typeButton
         $imgPanelInfo = $("<img>").attr("src",$srcImg);
         $($contentPanel).append($imgPanelInfo);
     }
+
+    // Adiciona título
+    const $title = $("<h2></h2>").text("Rank - Mole Games").addClass("title_table");
+    $($contentPanel).append($title);
+
     // Adiciona o texto ao painel de informações ou o contador
     $txtPanelInfo = ($hasTimer)?$("<p></p>").html($countTimer):$("<p></p>").html($txt);
     $($txtPanelInfo).css("font-size",`${$fontSize}px`);
     $($contentPanel).append($txtPanelInfo);
+
+    // Adicionando a tabela de ranqueamento
+    if ($isTable) {
+        const $containerTable = $("<div></div>").addClass("table_container");
+
+        $($containerTable).append($tableElement);
+        $($contentPanel).append($containerTable);
+    }
     
     // Se não houver timer exibe um texto fixo ao inves de um cronometro regressivo
     if (!$hasTimer && $typeButton) {

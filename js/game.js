@@ -1,9 +1,16 @@
+const $URL = "http://192.168.100.55:8080";
+
 const $levels = {
   "easy": 3,
   "medium": 5,
   "hard": 7
 };
 
+const $levelsView = {
+  3: "easy",
+  5: "medium",
+  7: "hard"
+};
 
 const $imagesGame = {
   "active": "toupeira.gif",
@@ -170,6 +177,20 @@ function resetMoleMarked() {
   }
 }
 
+function sizeScreenAction() {
+  let $width = $(window).width();
+
+  $imageWidth = 80;
+  $imageHeight = 60;
+
+  if ($width <= 767) {
+    $imageWidth = 50;
+    $imageHeight = 40;
+  }
+
+  fillBoard();
+}
+
 function resetGame(option) {
   if (option === "all") {
     $value = 0;
@@ -188,21 +209,90 @@ function endGame() {
 
   resetGame("all");
   buttonControl(3);
-
   fillBoard();
-  alertWifi(`Fim de jogo. Sua pontuação foi igual ${$finishValue}`, false, 0, `img/${$imagesGame.dead}`, 24, true);
+
+  if (typeof Storage !== "undefined") {
+    const $user = JSON.parse(localStorage.getItem("user"));
+
+    if ($user) {
+      const $level = $levelsView[getLevel()];
+
+      const $payloadRank = {
+        level: $level,
+        idUser: $user.id,
+        score: $finishValue,
+      };
+
+      console.log("payload -> ", $payloadRank);
+
+      $.ajax({
+        type: "POST",
+        async: true,
+        dataType: "json",
+        url: `${$URL}/rank`,
+        contentType: "application/json",
+        data: JSON.stringify($payloadRank),
+        success: function() {
+          getRanks($finishValue);
+        },
+        error: function(data) {
+          const { responseText } = data;
+          const $errorText = responseText;
+
+          getRanks($finishValue, $errorText);
+        }
+      });
+
+    }
+
+  } else {
+    createMessage('Erro na validação, tente novamente!', "error", "error.png");
+    return;
+  }
 }
 
-function sizeScreenAction() {
-  let $width = $(window).width();
+function getRanks($score, $errorText) {
+  const $level = $levelsView[getLevel()];
 
-  $imageWidth = 80;
-  $imageHeight = 60;
+  const $message = $errorText ? $errorText : `Você ultrapassou sua record. Sua pontuação foi de ${$score}`;
 
-  if ($width <= 767) {
-    $imageWidth = 50;
-    $imageHeight = 40;
-  }
+  $.ajax({
+    type: "GET",
+    async: true,
+    url: `${$URL}/rank?level=${$level}`,
+    dataType: "json",
+    success: function(data) {
+      console.log("data ranks -> ", data);
+      const $table = createTable(data);
+      alertWifi($message, false, 0, `img/${$imagesGame.dead}`, 18, true, true, $table);
+    },
+  });
+}
 
-  fillBoard();
+function createTable(ranks) {
+  $table = $("<table></table>");
+  $header = $("<tr></tr>").html("<th>Posição</th><th>Usuário</th><th>Pontuação</th><th>Nível</th>");
+
+  $($table).append($header);
+
+  ranks.forEach((rank, index) => {
+    const $user = rank && rank.user.name;
+    const $score = rank && rank.score;
+    const $level = rank && rank.level;
+
+    const $line = $("<tr></tr>");
+    const $columnIndex = $("<td></td>").text(index + 1);
+    const $columnUser = $("<td></td>").text($user);
+    const $columnScore = $("<td></td>").text($score);
+    const $columnLevel = $("<td></td>").text($level);
+
+    $($line).append($columnIndex);
+    $($line).append($columnUser);
+    $($line).append($columnScore);
+    $($line).append($columnLevel);
+
+    $($table).append($line);
+  });
+
+  return $table;
 }

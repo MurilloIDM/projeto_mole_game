@@ -1,4 +1,4 @@
-const $URL = "http://localhost:8080";
+const $URL = "http://192.168.100.55:8080";
 
 $(document).ready(function() {
   $("#btnRegister").click(function() {
