@@ -1,5 +1,3 @@
-const $URL = "http://192.168.100.55:8080";
-
 $(document).ready(function() {
   $("#btnLogin").click(function() {
     let $name = $("#user").val();
@@ -9,7 +7,7 @@ $(document).ready(function() {
       $.ajax({
         type: "GET",
         async: true,
-        url: `${$URL}/users`,
+        url: `${$URL}/users/login?name=${$name}&password=${$pwd}`,
         dataType: "json",
         success: success
       });
@@ -43,19 +41,14 @@ $(document).ready(function() {
   });
 });
 
-function success(users) {
-  let $name = $("#user").val();
-  let $pwd = $("#pwd").val();
+function success(data) {
+  const { login, name, id } = data;
 
-  const $usersExists = users.find(user => {
-    return user.name === $name && user.password === $pwd
-  });
-
-  if ($usersExists) {
+  if (login) {
     if (typeof (Storage) !== "undefined") {
       const user = {
-        id: $usersExists.id,
-        name: $usersExists.name,
+        id,
+        name
       };
 
       localStorage.setItem("user", JSON.stringify(user));
@@ -65,7 +58,7 @@ function success(users) {
       return;
     }
 
-    createMessage(`Boa sorte, ${$name}. Aproveite o jogo!`, "success", "success.png");
+    createMessage(`Boa sorte, ${name}. Aproveite o jogo!`, "success", "success.png");
 
     setTimeout(open, 1900, "game.html", "_self");
     return;

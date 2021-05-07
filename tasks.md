@@ -9,4 +9,5 @@ Objetivo:
   - [] Adicionar som ao clicar em uma toupeira
   - [] Adicionar animação ao clicar na toupeira
   - [] Colocar um slide na exibição da tabela
-  - [] Exibição dos 5 melhores por cards (opcional)
+  - [X] Refatorar endpoint de login (Regra de negócio no BE)
+  - [] Terminar de refatorar os arquivos
