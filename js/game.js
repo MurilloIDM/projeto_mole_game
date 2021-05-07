@@ -158,21 +158,6 @@ function endGame() {
   }
 }
 
-function limitFive($data) {
-  const $array = [];
-  const $length = $data.length;
-
-  if ($length > 5) {
-    for (let x = 0; x < 5; x++) {
-      $array.push($data[x]);
-    }
-
-    return $array;
-  }
-
-  return $data;
-}
-
 function getRanks($score, $errorText) {
   const $level = $LEVELS_NUMBER[getLevel()];
 
@@ -186,10 +171,10 @@ function getRanks($score, $errorText) {
     url: `${$URL}/rank?level=${$level}`,
     dataType: "json",
     success: function(data) {
-      const $ranks = limitFive(data);
+      const $ranks = data.slice(0, 5);
       const $table = createTable($ranks);
 
-      alertWifi($message, false, 0, `img/${$IMAGES_GAME.active}`, 18, true, true, $table, "Rank - Mole Game");
+      alertWifi($message, false, 0, `img/${$IMAGES_GAME.active}`, 18, true, true, $table, "Classificação - Mole Game");
     },
   });
 }
