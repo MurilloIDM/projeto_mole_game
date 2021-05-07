@@ -62,23 +62,3 @@ function error(data) {
 
   createMessage($messageError, "error", "error.png");
 }
-
-function createMessage(message, className, icon) {
-  $("#message")
-    .html(
-      `<span class="image_message"><img src='./img/${icon}' width='20' height='20' /></span>
-      <span class="text_message">${message}</span>`
-    );
-
-  $("#message").removeClass();
-  $("#message").addClass(className);
-  $("#message").slideDown();
-
-  $("#message").css("display", "flex");
-
-  setTimeout(setHiddenMessage, 1800, "#message");
-}
-
-function setHiddenMessage($element) {
-  $($element).slideUp();
-}

@@ -1,4 +1,4 @@
-const $initialTime = 5;
+const $initialTime = 30;
 
 let $imageWidth = 80;
 let $imageHeight = 60;

@@ -2,9 +2,9 @@ Responsável: Murillo Isidoro de Medeiros
 Data: 06/05/2021
 Objetivo:
   - [X] Limitar em 5 registro o retorno da tabela
-  - [] Refatorar função de modal (Wilton)
-    - [] Título
-    - [] Imagem de destaque
+  - [X] Refatorar função de modal (Wilton)
+    - [X] Título
+    - [X] Imagem de destaque
   - [X] Adicionar destaque caso o usuário logado estiver no rank
   - [X] Adicionar som ao clicar em uma toupeira
   - [X] Adicionar animação ao clicar na toupeira

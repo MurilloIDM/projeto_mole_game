@@ -226,7 +226,7 @@ footer .select_level {
 
 @media screen and (min-width: 768px) {
     #board:hover {
-        cursor: URL(../img/cursor.png), default;
+        cursor: URL(../img/cursor.png), auto;
     }    
 
     #board img {
