@@ -6,7 +6,8 @@ Objetivo:
     - [] Título
     - [] Imagem de destaque
   - [X] Adicionar destaque caso o usuário logado estiver no rank
-  - [] Adicionar som ao clicar em uma toupeira
-  - [] Adicionar animação ao clicar na toupeira
+  - [X] Adicionar som ao clicar em uma toupeira
+  - [X] Adicionar animação ao clicar na toupeira
   - [X] Refatorar endpoint de login (Regra de negócio no BE)
   - [] Terminar de refatorar os arquivos
+  - [] Adicionar pontuação quando não passar o record
