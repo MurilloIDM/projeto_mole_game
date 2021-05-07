@@ -10,4 +10,5 @@ Objetivo:
   - [X] Adicionar animação ao clicar na toupeira
   - [X] Refatorar endpoint de login (Regra de negócio no BE)
   - [] Terminar de refatorar os arquivos
-  - [] Adicionar pontuação quando não passar o record
+  - [X] Adicionar pontuação quando não passar o record
+  - [X] Refatorar endpoint de criar usuário (senha)

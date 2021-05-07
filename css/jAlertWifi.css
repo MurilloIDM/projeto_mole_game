@@ -27,9 +27,7 @@
 }
 .panelInfo .contentPanel p {
     color:#F29D03;
-    font-size: 50px;
-    margin:25px;
-    line-height: 2em;
+    margin: 24px 12px;
 }
 .panelInfo .contentPanel button {
     font-size: 18px;
@@ -46,11 +44,11 @@
     outline: none;
 }
 
-.contentPanel h2 {
+.contentPanel .title {
     font-size: 32px;
     font-weight: 900;
     color: #F29D03;
-    margin-bottom: 24px;
+    margin: 24px 0;
 }
 
 .contentPanel .table_container {

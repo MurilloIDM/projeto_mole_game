@@ -1,4 +1,4 @@
-const $initialTime = 30;
+const $initialTime = 5;
 
 let $imageWidth = 80;
 let $imageHeight = 60;
@@ -59,7 +59,7 @@ $(document).ready(function() {
   });
 
   $("#btnExit").click(function() {
-    alertWifi("Você já está indo embora?", false, 0, false, 24, false);
+    alertWifi(["Você já está indo embora?"], false, 0, `img/${$IMAGES_GAME.default}`, 20, false, false, false, "Mole Game");
   });
 });
 
@@ -176,7 +176,9 @@ function limitFive($data) {
 function getRanks($score, $errorText) {
   const $level = $LEVELS_NUMBER[getLevel()];
 
-  const $message = $errorText ? $errorText : `Você superou seu record anterior! Chegou em ${$score} pontos!`;
+  const $message = $errorText ?
+    [`Você marcou ${$score} pontos!`, $errorText]
+    : [`Você superou seu record anterior! Chegou em ${$score} pontos!`];
 
   $.ajax({
     type: "GET",
@@ -187,7 +189,7 @@ function getRanks($score, $errorText) {
       const $ranks = limitFive(data);
       const $table = createTable($ranks);
 
-      alertWifi($message, false, 0, `img/${$IMAGES_GAME.dead}`, 18, true, true, $table);
+      alertWifi($message, false, 0, `img/${$IMAGES_GAME.active}`, 18, true, true, $table, "Rank - Mole Game");
     },
   });
 }

@@ -117,6 +117,10 @@ footer .buttons_game {
     justify-content: center;
 }
 
+footer .buttons_game button {
+    font-size: 12px;
+}
+
 #btnPlay {
     position: absolute;
     top: 0;
